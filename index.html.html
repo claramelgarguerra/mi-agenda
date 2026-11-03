@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi agenda · Organiza bonito</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+:root{--ink:#393733;--muted:#8d8981;--paper:#f7f6f2;--white:#fff;--line:#e9e6df;--pink:#ead9d8;--pink2:#f3ece9;--lav:#e4e0e9;--sage:#e1e7df;--butter:#eee8d7;--peach:#eee2d8;--accent:#9b887d;--shadow:0 10px 35px rgba(70,60,45,.045)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
+.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.sidebar{background:#fff;border-right:1px solid var(--line);padding:30px 20px;display:flex;flex-direction:column;gap:28px}.brand{padding:0 12px}.brand small{color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-size:10px;font-weight:700}.brand h1{font:600 27px 'Playfair Display',serif;margin:6px 0}.brand p{font-size:12px;color:var(--muted);margin:0}.nav-label{font-size:10px;letter-spacing:1.5px;color:#aaa2aa;text-transform:uppercase;padding:0 12px;margin-bottom:8px}.nav{display:grid;gap:5px}.nav button{display:flex;align-items:center;gap:12px;background:transparent;color:#77717b;text-align:left;padding:12px;border-radius:12px;font-size:13px}.nav button.active,.nav button:hover{background:#f0ede8;color:#76675e}.nav .ico{width:20px;text-align:center;font-size:16px}.side-note{margin-top:auto;background:#f2efea;border-radius:16px;padding:16px;font-size:12px;color:#8f6e7b;line-height:1.6}.side-note strong{display:block;color:#85586a;margin-bottom:4px}
+main{padding:34px 4.5%;max-width:1500px;width:100%;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.eyebrow{font-size:11px;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase}.topbar h2{font:600 30px 'Playfair Display',serif;margin:5px 0}.today{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 15px;color:#817985;font-size:12px}
+.view{display:none}.view.active{display:block}.welcome{background:linear-gradient(110deg,#eee9e2,#f1efeb 65%,#e9ede7);border-radius:22px;padding:28px 32px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;min-height:150px}.welcome h3{font:600 25px 'Playfair Display',serif;margin:7px 0}.welcome p{color:#817782;font-size:13px;margin:0}.welcome .flower{font-size:54px;opacity:.7;padding-right:15px}
+.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:21px;box-shadow:var(--shadow);min-width:0}.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.card h3{font:600 18px 'Playfair Display',serif;margin:0}.sub{font-size:11px;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.stat{padding:15px;border-radius:15px;background:#fff;border:1px solid var(--line)}.stat span{font-size:11px;color:var(--muted)}.stat strong{display:block;font:600 25px 'Playfair Display',serif;margin-top:6px}.stat:nth-child(1){background:#fbf0f2}.stat:nth-child(2){background:#f2eff9}.stat:nth-child(3){background:#eff5ef}
+.task-list{display:grid;gap:9px}.task{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:12px;background:#fcfaf9}.task input{accent-color:#9b887d;width:16px;height:16px}.task .task-text{flex:1;font-size:12px}.task.done .task-text{text-decoration:line-through;color:#aaa}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:var(--lav);color:#76698e}.tag.estudios{background:var(--lav);color:#76698e}.tag.trabajo{background:var(--sage);color:#63816a}.tag.personal{background:var(--pink);color:#986779}.tag.planes{background:var(--butter);color:#8b7840}.tag.salud{background:var(--peach);color:#a4765b}
+.btn{background:#8f8176;color:white;padding:10px 15px;border-radius:10px;font-size:12px;font-weight:600}.btn:hover{background:#786b61}.btn.light{background:#f0ece7;color:#786b61}.btn.ghost{background:#f7f5f4;color:#777}.btn.small{padding:7px 10px;font-size:11px}.row{display:flex;gap:8px;align-items:center}.empty{font-size:12px;color:#aaa;text-align:center;padding:24px 5px}
+input,textarea,select{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;color:var(--ink);outline:none;width:100%;font-size:12px}input:focus,textarea:focus,select:focus{border-color:#b9aaa0}label{font-size:11px;color:#827b85;display:block;margin-bottom:6px}.field{margin-bottom:12px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.inline-add{display:flex;gap:8px}.inline-add input{flex:1}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.calendar-head h3{font:600 22px 'Playfair Display',serif;margin:0}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.dayname{text-align:center;color:#aaa;font-size:10px;padding:8px}.day{min-height:105px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px;font-size:11px;cursor:pointer}.day:hover,.day.selected{border-color:#b7a69a;background:#faf8f4}.day.muted{opacity:.35}.day .num{font-weight:600}.event-dot{display:block;font-size:9px;padding:4px 5px;border-radius:6px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:#f4e4e9;color:#986779}.event-dot.estudios{background:#eee9f8;color:#76698e}.event-dot.trabajo{background:#e7f0e8;color:#63816a}.event-dot.planes{background:#f8f0d9;color:#8b7840}.event-dot.salud{background:#f8e9df;color:#a4765b}.event-dot.pastel-rosa{background:#f2e1e2;color:#987477}.event-dot.pastel-lavanda{background:#eae5f0;color:#7b718b}.event-dot.pastel-salvia{background:#e5ebe2;color:#687b68}.event-dot.pastel-arena{background:#eee8dc;color:#85775e}.event-dot.pastel-azul{background:#e3ebef;color:#6c818c}.event-dot.pastel-melocoton{background:#f2e5dc;color:#987762}
+.section-title{font:600 23px 'Playfair Display',serif;margin:0 0 5px}.section-desc{font-size:12px;color:var(--muted);margin:0 0 20px}.two-col{display:grid;grid-template-columns:1fr 330px;gap:18px}.habit{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #f2eeee;font-size:12px}.habit input{width:auto;accent-color:#9b887d}.habit:last-child{border:0}.note-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.note{padding:17px;border-radius:14px;min-height:135px;position:relative;white-space:pre-wrap;font-size:12px;line-height:1.6}.note:nth-child(3n+1){background:#fbf0f2}.note:nth-child(3n+2){background:#f1eef8}.note:nth-child(3n){background:#eff4ee}.note strong{display:block;font:600 16px 'Playfair Display',serif;margin-bottom:8px}.note button{position:absolute;right:10px;top:8px;background:transparent;color:#a99}.modal-back{display:none;position:fixed;inset:0;background:#342b3344;align-items:center;justify-content:center;padding:18px;z-index:5}.modal-back.show{display:flex}.modal{background:#fff;border-radius:20px;padding:24px;width:min(470px,100%);box-shadow:0 20px 70px #3333}.modal h3{font:600 22px 'Playfair Display',serif;margin:0 0 18px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}.footer{font-size:10px;color:#aaa;margin-top:24px;text-align:center}
+@media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{padding:15px;gap:12px;border-right:0;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px}.brand p{display:none}.nav-label,.side-note{display:none}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:9px}.nav button .ico{display:none}main{padding:22px 16px}.grid,.two-col{grid-template-columns:1fr}.note-grid{grid-template-columns:1fr 1fr}.day{min-height:75px;padding:5px}.event-dot{font-size:8px}.welcome{padding:22px}.welcome .flower{font-size:38px}}
+@media(max-width:520px){.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:20px}.note-grid{grid-template-columns:1fr}.topbar h2{font-size:25px}.today{display:none}.calendar{gap:3px}.day{min-height:58px}.event-dot{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div><small>Tu espacio personal</small><h1>Mi agenda</h1><p>Organiza bonito, vive tranquila.</p></div></div>
+  <div><div class="nav-label">Menú</div><nav class="nav">
+    <button class="active" data-view="inicio"><span class="ico">⌂</span>Inicio</button>
+    <button data-view="calendario"><span class="ico">▦</span>Calendario</button>
+    <button data-view="tareas"><span class="ico">✓</span>Mis tareas</button>
+    <button data-view="habitos"><span class="ico">✿</span>Hábitos</button>
+    <button data-view="notas"><span class="ico">✎</span>Notas</button>
+  </nav></div>
+  <div class="side-note"><strong>Un día a la vez ✿</strong>No hace falta hacerlo todo hoy. Avanza a tu ritmo y celebra cada pequeño paso.</div>
+</aside>
+<main>
+  <div class="topbar"><div><div class="eyebrow" id="eyebrow">Tu rincón de organización</div><h2 id="pageTitle">Buenos días</h2></div><div class="today" id="todayLabel"></div></div>
+
+  <section class="view active" id="inicio">
+    <div class="welcome"><div><div class="eyebrow">BIENVENIDA A TU AGENDA</div><h3>Haz espacio para lo que importa.</h3><p>Planifica tus días con calma y a tu manera.</p></div><div class="flower">✿</div></div>
+    <div class="stats">
+      <div class="stat"><span>Tareas pendientes</span><strong id="pendingCount">0</strong></div>
+      <div class="stat"><span>Completadas</span><strong id="doneCount">0</strong></div>
+      <div class="stat"><span>Eventos próximos</span><strong id="eventCount">0</strong></div>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="card-head"><h3>Para hoy</h3><button class="btn light small" onclick="openTask()">+ Añadir tarea</button></div><div id="todayTasks" class="task-list"></div></div>
+      <div class="card"><div class="card-head"><h3>Próximos planes</h3><button class="btn light small" onclick="showView('calendario')">Ver calendario</button></div><div id="upcoming"></div></div>
+    </div>
+  </section>
+
+  <section class="view" id="calendario">
+    <div class="card">
+      <div class="calendar-head"><div><div class="eyebrow">ORGANIZA TUS FECHAS</div><h3 id="monthTitle"></h3></div><div class="row"><button class="btn ghost small" onclick="moveMonth(-1)">‹</button><button class="btn ghost small" onclick="moveMonth(1)">›</button><button class="btn light small" onclick="goToday()">Hoy</button><button class="btn small" onclick="openEvent()">+ Evento</button></div></div>
+      <div class="calendar" id="calendarGrid"></div>
+    </div>
+    <div class="card" style="margin-top:18px"><div class="card-head"><h3 id="selectedDateTitle">Eventos del día</h3><button class="btn light small" onclick="openEvent()">+ Añadir</button></div><div id="selectedEvents"></div></div>
+  </section>
+
+  <section class="view" id="tareas">
+    <h3 class="section-title">Mis tareas</h3><p class="section-desc">Todo lo que tienes en mente, en un mismo lugar.</p>
+    <div class="card"><div class="card-head"><h3>Lista de tareas</h3><button class="btn" onclick="openTask()">+ Nueva tarea</button></div><div class="row" style="margin-bottom:15px"><select id="taskFilter" onchange="renderTasks()" style="max-width:190px"><option value="todas">Todas las tareas</option><option value="pendientes">Pendientes</option><option value="hechas">Completadas</option></select><select id="categoryFilter" onchange="renderTasks()" style="max-width:190px"><option value="todas">Todas las categorías</option><option>Estudios</option><option>Trabajo</option><option>Personal</option><option>Planes</option><option>Salud</option></select></div><div id="allTasks" class="task-list"></div></div>
+  </section>
+
+  <section class="view" id="habitos">
+    <h3 class="section-title">Mis pequeños hábitos</h3><p class="section-desc">Las pequeñas cosas que haces cada día también cuentan.</p>
+    <div class="two-col"><div class="card"><div class="card-head"><h3>Seguimiento de hoy</h3><span class="sub" id="habitDate"></span></div><div id="habitList"></div></div><div class="card"><h3 style="margin-bottom:15px">Añadir un hábito</h3><div class="field"><label>Nombre del hábito</label><input id="habitName" placeholder="Ej. Leer 10 minutos"></div><button class="btn" onclick="addHabit()">Añadir hábito</button><p class="sub" style="line-height:1.6;margin-top:18px">Puedes crear tus propias rutinas: beber agua, estudiar, caminar, leer, descansar…</p></div></div>
+  </section>
+
+  <section class="view" id="notas">
+    <h3 class="section-title">Mi espacio de notas</h3><p class="section-desc">Ideas, listas, recordatorios y todo aquello que no quieres olvidar.</p>
+    <div class="card" style="margin-bottom:18px"><div class="form-row"><div class="field"><label>Título</label><input id="noteTitle" placeholder="Una idea, una lista..."></div><div class="field"><label>Contenido</label><input id="noteBody" placeholder="Escribe aquí tu nota"></div></div><button class="btn" onclick="addNote()">Guardar nota</button></div>
+    <div class="note-grid" id="notesGrid"></div>
+  </section>
+  <div class="footer">Hecha con cariño para organizar tus días · Tus datos se guardan en este ordenador.</div>
+</main>
+</div>
+
+<div class="modal-back" id="modalBack" onclick="if(event.target===this)closeModal()"><div class="modal"><h3 id="modalTitle">Añadir</h3><div id="modalContent"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" id="modalSave">Guardar</button></div></div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const today=new Date(); today.setHours(0,0,0,0);
+const iso=d=>{let x=new Date(d.getTime()-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,10)};
+const pretty=d=>new Date(d+'T12:00:00').toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+const dayKey=iso(today);
+let tasks=JSON.parse(localStorage.getItem('agenda_tasks')||'[]');
+let events=JSON.parse(localStorage.getItem('agenda_events')||'[]');
+let habits=JSON.parse(localStorage.getItem('agenda_habits')||'[{"id":1,"name":"Beber suficiente agua","checks":{}},{"id":2,"name":"Leer un rato","checks":{}},{"id":3,"name":"Mover el cuerpo","checks":{}},{"id":4,"name":"Dedicar tiempo al estudio","checks":{}},{"id":5,"name":"Preparar el día siguiente","checks":{}}]');
+let notes=JSON.parse(localStorage.getItem('agenda_notes')||'[]');
+let viewDate=new Date(today), selectedDate=dayKey, editId=null, modalKind='';
+function save(){localStorage.setItem('agenda_tasks',JSON.stringify(tasks));localStorage.setItem('agenda_events',JSON.stringify(events));localStorage.setItem('agenda_habits',JSON.stringify(habits));localStorage.setItem('agenda_notes',JSON.stringify(notes));}
+function dateLabel(){return today.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+$('todayLabel').textContent=dateLabel();
+$('pageTitle').textContent=(today.getHours()<12?'Buenos días':today.getHours()<20?'Buenas tardes':'Buenas noches');
+function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));let titles={inicio:'Tu agenda',calendario:'Calendario',tareas:'Mis tareas',habitos:'Mis hábitos',notas:'Mis notas'};$('pageTitle').textContent=titles[v];$('eyebrow').textContent=v==='inicio'?'TU RINCÓN DE ORGANIZACIÓN':'ORGANIZA TU DÍA A DÍA';if(v==='calendario')renderCalendar();if(v==='tareas')renderTasks();if(v==='habitos')renderHabits();if(v==='notas')renderNotes();}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>showView(b.dataset.view));
+function catClass(c){return (c||'Personal').toLowerCase()}
+function taskHTML(t){return `<div class="task ${t.done?'done':''}"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${t.id})"><span class="task-text">${esc(t.title)} ${t.date?`<span class="sub">· ${pretty(t.date)}</span>`:''}</span><span class="tag ${catClass(t.cat)}">${esc(t.cat||'Personal')}</span><button class="btn ghost small" onclick="deleteTask(${t.id})">×</button></div>`}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderHome(){let pending=tasks.filter(t=>!t.done),done=tasks.filter(t=>t.done);$('pendingCount').textContent=pending.length;$('doneCount').textContent=done.length;$('eventCount').textContent=events.filter(e=>e.date>=dayKey).length;$('todayTasks').innerHTML=tasks.filter(t=>t.date===dayKey).length?tasks.filter(t=>t.date===dayKey).map(taskHTML).join(''):'<div class="empty">No tienes tareas para hoy. ¡Disfruta el espacio! ✿</div>';let next=events.filter(e=>e.date>=dayKey).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);$('upcoming').innerHTML=next.length?next.map(e=>`<div class="task"><span class="tag ${catClass(e.cat)}">${pretty(e.date).split(' de ')[0]} ${pretty(e.date).split(' de ')[1]||''}</span><span class="task-text">${esc(e.title)}<span class="sub"> · ${esc(e.time||'Sin hora')}</span></span></div>`).join(''):'<div class="empty">Todavía no hay planes apuntados.</div>'}
+function toggleTask(id){let t=tasks.find(x=>x.id===id);t.done=!t.done;save();renderAll()}
+function deleteTask(id){tasks=tasks.filter(x=>x.id!==id);save();renderAll()}
+function renderTasks(){let f=$('taskFilter').value,c=$('categoryFilter').value;let arr=tasks.filter(t=>(f==='todas'||(f==='pendientes'?!t.done:t.done))&&(c==='todas'||t.cat===c)).sort((a,b)=>(a.date||'').localeCompare(b.date||''));$('allTasks').innerHTML=arr.length?arr.map(taskHTML).join(''):'<div class="empty">No hay tareas en esta selección.</div>'}
+function openTask(){modalKind='task';editId=null;$('modalTitle').textContent='Nueva tarea';$('modalContent').innerHTML=`<div class="field"><label>¿Qué tienes que hacer?</label><input id="mTitle" placeholder="Escribe tu tarea"></div><div class="form-row"><div class="field"><label>Fecha</label><input id="mDate" type="date" value="${dayKey}"></div><div class="field"><label>Categoría</label><select id="mCat"><option>Personal</option><option>Estudios</option><option>Trabajo</option><option>Planes</option><option>Salud</option></select></div></div>`;$('modalSave').onclick=saveTask;$('modalBack').classList.add('show')}
+function saveTask(){let title=$('mTitle').value.trim();if(!title)return alert('Escribe el nombre de la tarea.');tasks.push({id:Date.now(),title,date:$('mDate').value,cat:$('mCat').value,done:false});save();closeModal();renderAll()}
+function openEvent(){modalKind='event';$('modalTitle').textContent='Añadir evento';$('modalContent').innerHTML=`<div class="field"><label>Nombre del evento</label><input id="mTitle" placeholder="Cita, cumpleaños, plan..."></div><div class="form-row"><div class="field"><label>Fecha</label><input id="mDate" type="date" value="${selectedDate}"></div><div class="field"><label>Hora (opcional)</label><input id="mTime" type="time"></div></div><div class="form-row"><div class="field"><label>Categoría</label><select id="mCat"><option>Personal</option><option>Estudios</option><option>Trabajo</option><option>Planes</option><option>Salud</option></select></div><div class="field"><label>Color pastel del calendario</label><select id="mColor"><option value="pastel-arena">Arena suave</option><option value="pastel-rosa">Rosa empolvado</option><option value="pastel-lavanda">Lavanda</option><option value="pastel-salvia">Verde salvia</option><option value="pastel-azul">Azul niebla</option><option value="pastel-melocoton">Melocotón</option></select></div></div>`;$('modalSave').onclick=saveEvent;$('modalBack').classList.add('show')}
+function saveEvent(){let title=$('mTitle').value.trim();if(!title)return alert('Escribe el nombre del evento.');events.push({id:Date.now(),title,date:$('mDate').value,time:$('mTime').value,cat:$('mCat').value,color:$('mColor').value});save();selectedDate=$('mDate').value;closeModal();renderAll();renderCalendar()}
+function deleteEvent(id){events=events.filter(e=>e.id!==id);save();renderAll();renderCalendar()}
+function closeModal(){$('modalBack').classList.remove('show')}
+function moveMonth(n){viewDate.setMonth(viewDate.getMonth()+n);renderCalendar()}
+function goToday(){viewDate=new Date(today);selectedDate=dayKey;renderCalendar()}
+function renderCalendar(){let y=viewDate.getFullYear(),m=viewDate.getMonth();$('monthTitle').textContent=viewDate.toLocaleDateString('es-ES',{month:'long',year:'numeric'});let first=new Date(y,m,1),start=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate(),prev=new Date(y,m,0).getDate();let html=['L','M','X','J','V','S','D'].map(x=>`<div class="dayname">${x}</div>`).join('');for(let i=0;i<42;i++){let d=i-start+1,dt,muted=false;if(d<1){dt=new Date(y,m-1,prev+d);muted=true}else if(d>days){dt=new Date(y,m+1,d-days);muted=true}else dt=new Date(y,m,d);let key=iso(dt),ev=events.filter(e=>e.date===key);html+=`<div class="day ${muted?'muted':''} ${key===selectedDate?'selected':''}" onclick="selectDay('${key}')"><span class="num">${dt.getDate()}</span>${ev.slice(0,2).map(e=>`<span class="event-dot ${e.color||catClass(e.cat)}">${esc(e.title)}</span>`).join('')}${ev.length>2?`<span class="sub">+${ev.length-2}</span>`:''}</div>`} $('calendarGrid').innerHTML=html;$('selectedDateTitle').textContent='Eventos · '+pretty(selectedDate);let arr=events.filter(e=>e.date===selectedDate).sort((a,b)=>(a.time||'').localeCompare(b.time||''));$('selectedEvents').innerHTML=arr.length?arr.map(e=>`<div class="task"><span class="tag ${catClass(e.cat)}">${esc(e.time||'Sin hora')}</span><span class="task-text">${esc(e.title)}</span><button class="btn ghost small" onclick="deleteEvent(${e.id})">×</button></div>`).join(''):'<div class="empty">No hay eventos para este día.</div>'}
+function selectDay(d){selectedDate=d;renderCalendar()}
+function renderHabits(){$('habitDate').textContent=pretty(dayKey);$('habitList').innerHTML=habits.length?habits.map(h=>`<div class="habit"><input type="checkbox" ${h.checks[dayKey]?'checked':''} onchange="toggleHabit(${h.id},this.checked)"><span style="flex:1">${esc(h.name)}</span><button class="btn ghost small" onclick="deleteHabit(${h.id})">×</button></div>`).join(''):'<div class="empty">Añade tu primer hábito.</div>'}
+function toggleHabit(id,val){let h=habits.find(x=>x.id===id);h.checks[dayKey]=val;save()}
+function addHabit(){let n=$('habitName').value.trim();if(!n)return;habits.push({id:Date.now(),name:n,checks:{}});$('habitName').value='';save();renderHabits()}
+function deleteHabit(id){habits=habits.filter(h=>h.id!==id);save();renderHabits()}
+function addNote(){let title=$('noteTitle').value.trim(),body=$('noteBody').value.trim();if(!title&&!body)return;notes.unshift({id:Date.now(),title:title||'Nota nueva',body});$('noteTitle').value='';$('noteBody').value='';save();renderNotes()}
+function deleteNote(id){notes=notes.filter(n=>n.id!==id);save();renderNotes()}
+function renderNotes(){$('notesGrid').innerHTML=notes.length?notes.map(n=>`<div class="note"><button onclick="deleteNote(${n.id})">×</button><strong>${esc(n.title)}</strong>${esc(n.body)}</div>`).join(''):'<div class="empty">Tus notas aparecerán aquí. Añade una cuando quieras ✿</div>'}
+function renderAll(){renderHome();if($('tareas').classList.contains('active'))renderTasks();if($('calendario').classList.contains('active'))renderCalendar()}
+renderAll();renderCalendar();renderHabits();renderNotes();
+</script>
+</body>
+</html>
